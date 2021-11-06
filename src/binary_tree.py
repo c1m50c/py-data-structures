@@ -176,3 +176,30 @@ class BinaryTree:
         """
         
         self.root.remove(value=value, root=self.root)
+    
+    def invert(self, root: Node) -> None:
+        """
+            Inverts the tree, swapping every `Node` with its counter-part `left -> right | right -> left`.
+            
+            ## Example:
+            ```py
+            tree = BinaryTree()
+            tree.root = Node(value=4, left=None, right=None)
+            tree.root.left = Node(value=7, left=None, right=None)
+            tree.root.right = Node(value=2, left=None, right=None)
+            tree.invert(root=tree.root)
+            assert tree.root.right.value == 7
+            assert tree.root.left.value == 2
+            ```
+        """
+        
+        if not root:
+            return
+        
+        temp: Node = root
+        self.invert(root=root.left)
+        self.invert(root=root.right)
+        
+        temp = root.left
+        root.left = root.right
+        root.right = temp
