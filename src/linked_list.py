@@ -32,6 +32,8 @@ class LinkedList:
     tail: Node | None
     len: int
     
+    __slots__ = "head", "tail", "len"
+    
     def __init__(self, from_list: list[any] = [  ]) -> None:
         """
             ## Parameters:
@@ -50,6 +52,31 @@ class LinkedList:
     
     def __len__(self) -> int:
         return self.len
+
+    def __repr__(self) -> str:
+        return str(self)
+    
+    def __str__(self) -> str:
+        next_node: Node = self.head
+        return_string: str = "["
+
+        while next_node != None:
+            return_string += f"{next_node.value}, "
+            next_node = next_node.next
+        
+        return_string = return_string.removesuffix(", ")
+        return return_string + "]"
+
+    def __eq__(self, o: LinkedList) -> bool:
+        if self.len != len(o): return False
+        snn, onn = self.head, o.head
+        
+        while snn != None and onn != None:
+            if snn.value != onn.value:
+                return False
+            snn, onn = snn.next, onn.next
+        
+        return True
     
     def is_empty(self) -> bool:
         return self.head == None
@@ -127,6 +154,7 @@ class LinkedList:
     def append(self, other: LinkedList) -> None:
         """
             Appends a linked list to the end of this linked list, clearing the other list.
+            
             ## Example:
             ```py
             linked_list_one = LinkedList(from_list=[1, 2, 3])
@@ -150,3 +178,40 @@ class LinkedList:
             self.tail = other.tail
         self.len += len(other)
         other.clear()
+    
+    def remove_back(self) -> None:
+        """
+            Removes the `Node` at the end of the linked list.
+            
+            ## Example:
+            ```py
+            linked_list = LinkedList(from_list=[1, 3, 3, 7])
+            linked_list.remove_back()
+            assert len(linked_list) == 3
+            assert linked_list.tail.value == 3
+            ```
+        """
+        
+        if self.tail != None:
+            new_tail = self.tail.prev
+            new_tail.next = None
+            self.tail = new_tail
+            self.len -= 1
+    
+    def get(self, index: int) -> any:
+        """
+            Returns the value of the `Node` at the specified index.
+            
+            ## Example:
+            ```py
+            linked_list = LinkedList(from_list=[7, 8, 7])
+            assert linked_list.get(1) == 8
+            ```
+        """
+        
+        next_node: Node = self.head
+        for i in range(0, self.len):
+            if i == index:
+                return next_node.value
+            next_node = next_node.next
+        return None

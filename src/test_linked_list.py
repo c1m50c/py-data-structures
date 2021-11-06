@@ -8,6 +8,21 @@ def test_from_list():
     assert linked_list.tail.value == 3
 
 
+def test_str():
+    linked_list = LinkedList(from_list=[4, 0, 4])
+    assert str(linked_list) == "[4, 0, 4]"
+    linked_list.clear()
+    assert str(linked_list) == "[]"
+
+
+def test_eq():
+    linked_list_one = LinkedList(from_list=[6, 6, 6])
+    linked_list_two = LinkedList(from_list=[6, 6, 6])
+    assert linked_list_one == linked_list_two
+    linked_list_two.remove_back()
+    assert linked_list_one != linked_list_two
+
+
 def test_clear():
     linked_list = LinkedList(from_list=[1, 2, 3])
     linked_list.clear()
@@ -48,9 +63,30 @@ def test_append():
     assert len(linked_list_two) == 0
 
 
+def test_remove_back():
+    linked_list = LinkedList(from_list=[1, 3, 3, 7])
+    linked_list.remove_back()
+    assert len(linked_list) == 3
+    assert linked_list.tail.value == 3
+    
+    linked_list.clear()
+    linked_list.remove_back()
+    assert len(linked_list) == 0
+    assert linked_list.tail == None
+
+
+def test_get():
+    linked_list = LinkedList(from_list=[7, 8, 7])
+    assert linked_list.get(1) == 8
+
+
 if __name__ == "__main__":
     test_from_list()
+    test_str()
+    test_eq()
     test_clear()
     test_push_front()
     test_push_back()
     test_append()
+    test_remove_back()
+    test_get()
