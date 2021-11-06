@@ -66,7 +66,7 @@ class LinkedList:
         
         return_string = return_string.removesuffix(", ")
         return return_string + "]"
-
+    
     def __eq__(self, o: LinkedList) -> bool:
         if self.len != len(o): return False
         snn, onn = self.head, o.head
@@ -77,6 +77,17 @@ class LinkedList:
             snn, onn = snn.next, onn.next
         
         return True
+    
+    def __ne__(self, o: LinkedList) -> bool:
+        if self.len != len(o): return True
+        snn, onn = self.head, o.head
+        
+        while snn != None and onn != None:
+            if snn.value != onn.value:
+                return True
+            snn, onn = snn.next, onn.next
+        
+        return False
     
     def is_empty(self) -> bool:
         return self.head == None
@@ -215,3 +226,32 @@ class LinkedList:
                 return next_node.value
             next_node = next_node.next
         return None
+
+    def search(self, finding: any) -> int:
+        """
+            Linearly searches the linked list for a `Node` containing the value of `finding`, return its index if found.
+            Will raise an error if the `Node`'s value cannot be compared, or if the list is not all of the same type.
+            
+            ## Example:
+            ```py
+            linked_list = LinkedList(from_list=[1, 2, 3, 4, 5])
+            idx: int = linked_list.search(3)
+            assert idx == 2
+            ```
+        """
+        
+        i: int = 0
+        next_node: Node = self.head
+        while next_node != None:
+            if callable(getattr(next_node.value, "__eq__", None)):
+                if type(next_node.value) == type(finding):
+                    if next_node.value == finding:
+                        return i
+                else:
+                    raise TypeError("Node's value does not have same type as `finding`.")
+            else:
+                raise AttributeError("Value does not have the `__eq__` method.")
+            next_node = next_node.next
+            i += 1
+        
+        return -1

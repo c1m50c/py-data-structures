@@ -15,7 +15,7 @@ def test_str():
     assert str(linked_list) == "[]"
 
 
-def test_eq():
+def test_eq_ne():
     linked_list_one = LinkedList(from_list=[6, 6, 6])
     linked_list_two = LinkedList(from_list=[6, 6, 6])
     assert linked_list_one == linked_list_two
@@ -80,13 +80,20 @@ def test_get():
     assert linked_list.get(1) == 8
 
 
+def test_search():
+    linked_list = LinkedList(from_list=[1, 2, 3, 4, 5])
+    idx: int = linked_list.search(3)
+    assert idx == 2
+
+
 if __name__ == "__main__":
     test_from_list()
     test_str()
-    test_eq()
+    test_eq_ne()
     test_clear()
     test_push_front()
     test_push_back()
     test_append()
     test_remove_back()
     test_get()
+    test_search()
