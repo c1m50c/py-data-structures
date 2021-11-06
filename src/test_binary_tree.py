@@ -66,6 +66,13 @@ def test_invert():
     assert tree.root.left.value == 2
 
 
+def test_tree_str():
+    tree = BinaryTree(from_list=[3, 0, 0, 5])
+    assert str(tree) == "[3, 0, 5, 0]"
+    tree.clear()
+    assert str(tree) == "[]"
+
+
 if __name__ == "__main__":
     test_node_insertion()
     test_tree_from_list()
@@ -74,3 +81,4 @@ if __name__ == "__main__":
     test_node_remove()
     test_tree_remove()
     test_invert()
+    test_tree_str()

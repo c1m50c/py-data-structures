@@ -122,6 +122,29 @@ class BinaryTree:
             for x in from_list:
                 self.insert(x)
     
+    def __repr__(self) -> str:
+        return str(self)
+    
+    def __str__(self) -> str:
+        return_string = "["
+        
+        current: Node = self.root
+        queue: list[Node] = [  ]
+        
+        while True:
+            if current:
+                queue.append(current)
+                current = current.left
+            elif queue:
+                current = queue.pop(0)
+                return_string += f"{current.value}, "
+                current = current.right
+            else:
+                break
+        
+        return_string = return_string.removesuffix(", ")
+        return return_string + "]"
+    
     def clear(self) -> None:
         """
             Clears all `Node`s within the `BinaryTree`.
