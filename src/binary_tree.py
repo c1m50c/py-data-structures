@@ -17,6 +17,8 @@ class Node:
     left: Node | None
     right: Node | None
     
+    __slots__ = "value", "left", "right"
+    
     def insert(self, value: any) -> None:
         """
             Inserts a new `Node` into the `Node`.

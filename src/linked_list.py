@@ -16,7 +16,9 @@ class Node:
     value: any
     next: Node | None
     prev: Node | None
-
+    
+    __slots__ = "value", "next", "prev"
+ 
 
 class LinkedList:
     """
