@@ -48,14 +48,15 @@ class Node:
         else:
             parent.right = Node(value=value, left=None, right=None)
     
-    def remove(self, value: any, root: Node) -> None:
+    @staticmethod
+    def remove(value: any, root: Node) -> None:
         """
             Removes a `Node` containing the specified `value` from the sub-tree.
             
             ## Parameters:
             ```py
             value: any # Value of the Node to remove.
-            root: Node # Normally should be set to `self`, only a parameter for recurssion.
+            root: Node # Root Node of the sub-tree containg the Node you want to remove.
             ```
             
             ## Example:
@@ -76,9 +77,9 @@ class Node:
             return root
         
         if value < root.value:
-            root.left = self.remove(value=value, root=root.left)
+            root.left = Node.remove(value=value, root=root.left)
         elif value > root.value:
-            root.right = self.remove(value=value, root=root.right)
+            root.right = Node.remove(value=value, root=root.right)
         else:
             if not root.left and not root.right:
                 return None
@@ -88,7 +89,7 @@ class Node:
                     predecessor = predecessor.right
 
                 root.value = predecessor.value
-                root.left = self.remove(value=predecessor.value, root=root.left)
+                root.left = Node.remove(value=predecessor.value, root=root.left)
             else:
                 child: Node = root.left if root.left else root.right
                 root = child
@@ -200,7 +201,8 @@ class BinaryTree:
         
         self.root.remove(value=value, root=self.root)
     
-    def invert(self, root: Node) -> None:
+    @staticmethod
+    def invert(root: Node) -> None:
         """
             Inverts the tree, swapping every `Node` with its counter-part `left -> right | right -> left`.
             
@@ -220,8 +222,8 @@ class BinaryTree:
             return
         
         temp: Node = root
-        self.invert(root=root.left)
-        self.invert(root=root.right)
+        BinaryTree.invert(root=root.left)
+        BinaryTree.invert(root=root.right)
         
         temp = root.left
         root.left = root.right
