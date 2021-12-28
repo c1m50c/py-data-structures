@@ -63,6 +63,18 @@ def test_append():
     assert len(linked_list_two) == 0
 
 
+def test_remove_front():
+    linked_list = LinkedList(from_list=[1, 3, 3, 7])
+    linked_list.remove_front()
+    assert len(linked_list) == 3
+    assert linked_list.head.value == 3
+    
+    linked_list.clear()
+    linked_list.remove_back()
+    assert len(linked_list) == 0
+    assert linked_list.tail == None
+
+
 def test_remove_back():
     linked_list = LinkedList(from_list=[1, 3, 3, 7])
     linked_list.remove_back()
@@ -94,6 +106,7 @@ if __name__ == "__main__":
     test_push_front()
     test_push_back()
     test_append()
+    test_remove_front()
     test_remove_back()
     test_get()
     test_search()

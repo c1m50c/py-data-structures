@@ -91,6 +91,9 @@ class LinkedList:
         
         return False
     
+    def __bool__(self) -> bool:
+        return self.head != None
+    
     def is_empty(self) -> bool:
         return self.head == None
     
@@ -192,6 +195,25 @@ class LinkedList:
         self.len += len(other)
         other.clear()
     
+    def remove_front(self) -> None:
+        """
+            Removes the `Node` at the start of the linked list.
+            
+            ## Example:
+            ```py
+            linked_list = LinkedList(from_list=[1, 3, 3, 7])
+            linked_list.remove_front()
+            assert len(linked_list) == 3
+            assert linked_list.head.value == 3
+            ```
+        """
+        
+        if self.head:
+            new_head = self.head.next
+            new_head.prev = None
+            self.head = new_head
+            self.len -= 1
+    
     def remove_back(self) -> None:
         """
             Removes the `Node` at the end of the linked list.
@@ -205,7 +227,7 @@ class LinkedList:
             ```
         """
         
-        if self.tail != None:
+        if self.tail:
             new_tail = self.tail.prev
             new_tail.next = None
             self.tail = new_tail
